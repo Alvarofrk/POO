@@ -1,113 +1,46 @@
 
-class Habitante {
 
-private:
 
-	char *nombre;
-	
-	int edad;
+#include <iostream>
+#include <cstring>
+using namespace std;
 
-public: 
-
-	Habitante();
-	
-	virtual ~Habitante();
-
-	Habitante(const Habitante &);
-
-	virtual void dormir();
-
-	// setter/getter o accessors
-	virtual char *getNombre() const { return this->nombre;} 
-
-	// inline
-	virtual void setNombre(char *nombre) { this->nombre = nombre; } // inline
-
-	virtual int getEdad() const { return this->edad;} // inline
-
-	virtual void setEdad(int edad) { this->edad = edad; } // inline
-
+class Persona {
+  public:
+   Persona(char *n) {nombre= n};
+   virtual void VerNombre() { 
+      cout << nombre << endl; 
+   }
+  protected:
+   char nombre[30];
 };
-// Constructor
-Habitante::Habitante() {
-	
-	cout << "-clase habitante- Habitante construido."<< endl;
-
-}
-
-// Destructor
-Habitante::~Habitante() {
-
-	cout << "-clase habitante- Habitante "<< this->getNombre() << " destruido."<< endl;
-
-}
-
-
-// constructor copia
-Habitante::Habitante(const Habitante & original) {
-	
-	nombre = new char;
-	original.getNombre();
-
-}
-
-
-// metodo dormir
-void Habitante::dormir() {
-	
-	cout << "-clase habitante- zzzzzZZZZzzzzz zzz" << endl;
-
-}
-
-class Humano : public Habitante {
-
-private:
-
-	char *idioma;
-
-public: 
-
-	Humano();
-	
-	virtual ~Humano();
-
-	Humano(const Humano &);
-
-	virtual void hablar(char *bla) const;
-
-	// setter/getter o accessors
-	virtual char *getIdioma() const { return this->idioma;} // inline
-
-	virtual void setIdioma(char *idioma) { this->idioma = idioma; } // inline
-
+class Empleado : public Persona {
+  public:
+   Empleado(char *n) : Persona(n) {}
+   void VerNombre() { 
+      cout << "Emp: " << nombre << endl; 
+   }
 };
-// Constructor
-Humano::Humano() {
 
-	cout << "-clase Humano- Humano construido."<< endl;
+class Estudiante : public Persona {
+  public:
+   Estudiante(char *n) : Persona(n) {}
+   void VerNombre() { 
+      cout << "Est: " << nombre << endl; 
+   }
+};
 
+int main() {
+   Persona *Pepito = new Estudiante("Jose");
+   Persona *Carlos = new Empleado("Carlos");
+
+   Carlos->VerNombre();
+   Pepito->VerNombre();
+   delete Pepito;
+   delete Carlos;
+   
+   return 0;
 }
 
-// Destructor
-Humano::~Humano() {
-	
-	cout << "-clase Humano- Humano "<< this->getNombre() << " destruido."<< endl;
 
-}
-
-// constructor copia
-Humano::Humano(const Humano & original) {
-
-	idioma = new char;
-	idioma = original.getIdioma();
-
-}
-
-
-// metodo hablar
-void Humano::hablar(char *bla) const {
-
-	cout << "-clase Humano-" << this->getNombre() << " dice: " << bla << endl;
-
-}
 
