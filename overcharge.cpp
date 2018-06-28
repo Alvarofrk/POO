@@ -1,42 +1,33 @@
 #include <iostream>
 using namespace std;
- 
-class Tiempo {
-  public:
-   Tiempo(int h=0, int m=0) : hora(h), minuto(m) {}
-   
-   void Mostrar();
-   Tiempo operator+(Tiempo h);
-       
-  private:
-   int hora;
-   int minuto;
+
+class Pareja {
+public:
+    double a, b;
+
+    // constructor parametrizado
+    Pareja(const double a,const double b)
+    {
+        this->a = a;
+        this->b = b;
+    }
 };
 
-Tiempo Tiempo::operator+(Tiempo h) {
-   Tiempo temp;
-   
-   temp.minuto = minuto + h.minuto;
-   temp.hora   = hora   + h.hora;
-   
-   if(temp.minuto >= 60) {
-      temp.minuto -= 60;
-      temp.hora++;
-   }
-   return temp;
+// Sobrecarga del operador +
+Pareja& operator +(const Pareja &p1,const Pareja &p2)
+{
+  return *(new Pareja(p1.a + p2.a, p1.b + p2.b) );
 }
 
-void Tiempo::Mostrar() {
-   cout << hora << ":" << minuto << endl;
-}
+int main()
+{
+    Pareja A(50, 75 );
+    Pareja B(150, 175 );
+    Pareja C = A + B;
 
-int main() {
-   Tiempo Ahora(12,24), T1(4,45);
-   
-   T1 = Ahora + T1;   // (1)
-   T1.Mostrar();
-   
-   (Ahora + Tiempo(4,45)).Mostrar(); // (2)
-   
-   return 0;
+    cout << "A = " << A.a << ',' << A.b << "\n";
+    cout << "B = " << B.a << ',' << B.b << "\n";
+    cout << "C = " << C.a << ',' << C.b << "\n";
+
+    return 0;
 }
